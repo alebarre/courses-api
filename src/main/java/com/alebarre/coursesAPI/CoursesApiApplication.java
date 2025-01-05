@@ -5,7 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.alebarre.coursesAPI.enums.Category;
+import com.alebarre.coursesAPI.enums.Status;
 import com.alebarre.coursesAPI.model.Course;
+import com.alebarre.coursesAPI.model.Lesson;
 import com.alebarre.coursesAPI.repository.CourseRepository;
 
 @SpringBootApplication
@@ -22,7 +25,19 @@ public class CoursesApiApplication {
 			
 			Course c = new Course();
 			c.setName("Angular com Spring");
-			c.setCategory("Front-end");
+			c.setCategory(Category.FRONT_END);
+			
+			Lesson lesson = new Lesson();
+			lesson.setName("Introdução");
+			lesson.setYouTubeUrl("www.y.com");
+			lesson.setCourse(c);			
+			c.getLessons().add(lesson);
+			
+			Lesson lesson1 = new Lesson();
+			lesson1.setName("Angular");
+			lesson1.setYouTubeUrl("www.y2.com");
+			lesson1.setCourse(c);			
+			c.getLessons().add(lesson1);
 			
 			courseRepository.save(c);
 			
