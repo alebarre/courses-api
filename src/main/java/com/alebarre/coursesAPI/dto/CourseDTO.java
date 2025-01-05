@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record CoursesDTO (
+public record CourseDTO (
 		@JsonProperty("id") Long id, 
 		@NotBlank @NotNull @Length(min = 5, max = 100) String name, 
 		@NotNull @Length(max = 100) @Pattern(regexp = "Back-end|Front-end") String category) {}
