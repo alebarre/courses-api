@@ -5,11 +5,24 @@ import org.springframework.stereotype.Component;
 import com.alebarre.coursesAPI.enums.Category;
 import com.alebarre.coursesAPI.model.Course;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class CourseMapper {
 	
 	public CourseDTO toDTO(Course course) {
-		return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(), course.getLessons());
+
+		if (course == null) {
+			return null;
+		}
+
+		List<LessonDTO> lessons = course.getLessons()
+				.stream()
+				.map(item -> new LessonDTO(item.getId(), item.getName(), item.getYouTubeUrl()))
+				.collect(Collectors.toList());
+
+		return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(), lessons);
 	}
 	
 	public Course toEntity(CourseDTO courseDTO) {

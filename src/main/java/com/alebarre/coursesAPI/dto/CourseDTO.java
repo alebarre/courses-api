@@ -14,4 +14,4 @@ public record CourseDTO (
 		@JsonProperty("id") Long id, 
 		@NotBlank @NotNull @Length(min = 5, max = 100) String name, 
 		@NotNull @Length(max = 100) String category,
-		List<Lesson> lessons) {}
+		List<LessonDTO> lessons) {}
