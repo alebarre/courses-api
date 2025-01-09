@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "coursesAPI",
+			"path": "."
+		}
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}
