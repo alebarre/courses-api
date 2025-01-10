@@ -1,8 +1,11 @@
 package com.alebarre.coursesAPI.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,6 +14,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Lesson {
@@ -19,13 +24,20 @@ public class Lesson {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotNull
+	@NotBlank
+	@Length(min = 5, max = 100)
 	@Column(length = 100, nullable = false)
 	private String name;
 	
+	@NotNull
+	@NotBlank
+	@Length(min = 5, max = 100)
 	@Column(length = 11, nullable = false)
 	private String youTubeUrl;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id", nullable = false)
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private Course course;
@@ -60,6 +72,11 @@ public class Lesson {
 
 	public void setYouTubeUrl(String youTubeUrl) {
 		this.youTubeUrl = youTubeUrl;
+	}
+
+	@Override
+	public String toString() {
+		return "Lesson [id=" + id + ", name=" + name + ", youTubeUrl=" + youTubeUrl + ", course=" + course + "]";
 	}
 	
 }

@@ -22,7 +22,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 
@@ -54,6 +56,9 @@ public class Course {
 	@Convert(converter = StatusConverter.class)
 	private Status status = Status.ACTIVE;
 	
+	@NotNull
+	@NotEmpty
+	@Valid
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
 	//@JoinColumn(name = "course_id")
 	private List<Lesson> lessons = new ArrayList<>();
@@ -98,4 +103,11 @@ public class Course {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
+	@Override
+	public String toString() {
+		return "Course [id=" + id + ", name=" + name + ", category=" + category + ", status=" + status + ", lessons="
+				+ lessons + "]";
+	}
+
 }

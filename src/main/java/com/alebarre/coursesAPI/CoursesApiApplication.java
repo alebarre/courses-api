@@ -29,13 +29,13 @@ public class CoursesApiApplication {
 			
 			Lesson lesson = new Lesson();
 			lesson.setName("Introdução");
-			lesson.setYouTubeUrl("www.y.com");
+			lesson.setYouTubeUrl("ytb1.com");
 			lesson.setCourse(c);			
 			c.getLessons().add(lesson);
 			
 			Lesson lesson1 = new Lesson();
 			lesson1.setName("Angular");
-			lesson1.setYouTubeUrl("www.y2.com");
+			lesson1.setYouTubeUrl("ytb2.com");
 			lesson1.setCourse(c);			
 			c.getLessons().add(lesson1);
 			
