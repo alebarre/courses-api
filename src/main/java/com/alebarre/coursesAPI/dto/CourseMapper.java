@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.alebarre.coursesAPI.enums.Category;
 import com.alebarre.coursesAPI.model.Course;
+import com.alebarre.coursesAPI.model.Lesson;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +40,18 @@ public class CourseMapper {
 		
 		course.setName(courseDTO.name());
 		course.setCategory(converterCategoryValue(courseDTO.category()));
+
+		List<Lesson> lessonsData = courseDTO.lessons().stream().map(lessonDTO -> {
+			var item = new Lesson();
+			item.setId(lessonDTO.id());
+			item.setName(lessonDTO.name());
+			item.setYouTubeUrl(lessonDTO.youtubeUrl());
+			item.setCourse(course);
+			return item;
+		}).collect(Collectors.toList());
+
+		course.setLessons(lessonsData);
+
 		return course;
 	}
 	

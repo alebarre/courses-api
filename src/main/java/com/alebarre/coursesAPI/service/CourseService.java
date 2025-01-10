@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alebarre.coursesAPI.dto.CourseDTO;
 import com.alebarre.coursesAPI.dto.CourseMapper;
 import com.alebarre.coursesAPI.exception.RecordNotFoundException;
+import com.alebarre.coursesAPI.model.Course;
 import com.alebarre.coursesAPI.repository.CourseRepository;
 
 import jakarta.validation.Valid;
@@ -46,11 +47,15 @@ public class CourseService {
 		return courseMapper.toDTO(courseRepository.save(courseMapper.toEntity(course)));
 	}
 	
-	public CourseDTO update(@NotNull @Positive Long id, @Valid @NotNull  CourseDTO course) {
+	public CourseDTO update(@NotNull @Positive Long id, @Valid @NotNull  CourseDTO courseDTO) {
 		return courseRepository.findById(id)
 				.map(recordFound -> {
-					recordFound.setName(course.name());
-					recordFound.setCategory(courseMapper.converterCategoryValue(course.category()));
+					Course course = courseMapper.toEntity(courseDTO);
+					recordFound.setName(courseDTO.name());
+					recordFound.setCategory(courseMapper.converterCategoryValue(courseDTO.category()));
+					//recordFound.setLessons(course.getLessons());
+					recordFound.getLessons().clear();
+					recordFound.getLessons().addAll(course.getLessons());
 					return courseMapper.toDTO(courseRepository.save(recordFound));
 				})
 				.orElseThrow(() -> new RecordNotFoundException(id));
