@@ -27,58 +27,39 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-
-@SuppressWarnings("deprecation")
 @Entity
-//@Table(name = "cursos")
+// @Table(name = "cursos")
 @SQLDelete(sql = "UPDATE Course SET status = 'Inativo' WHERE id = ?")
-@Where(clause = "Status = 'Ativo'")
+@Where(clause = "status = 'Ativo'")
 public class Course {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonProperty("id")
+	@JsonProperty("_id")
 	private Long id;
 
-	@NotNull
 	@NotBlank
+	@NotNull
 	@Length(min = 5, max = 100)
 	@Column(length = 100, nullable = false)
 	private String name;
-	
+
 	@NotNull
 	@Column(length = 10, nullable = false)
 	@Convert(converter = CategoryConverter.class)
 	private Category category;
-	
+
 	@NotNull
 	@Column(length = 10, nullable = false)
 	@Convert(converter = StatusConverter.class)
 	private Status status = Status.ACTIVE;
-	
+
 	@NotNull
 	@NotEmpty
 	@Valid
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
-	//@JoinColumn(name = "course_id")
+	// @JoinColumn(name = "course_id")
 	private List<Lesson> lessons = new ArrayList<>();
-	
-
-	public List<Lesson> getLessons() {
-		return lessons;
-	}
-
-	public void setLessons(List<Lesson> lessons) {
-		this.lessons = lessons;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
 
 	public Long getId() {
 		return id;
@@ -104,10 +85,20 @@ public class Course {
 		this.category = category;
 	}
 
-	@Override
-	public String toString() {
-		return "Course [id=" + id + ", name=" + name + ", category=" + category + ", status=" + status + ", lessons="
-				+ lessons + "]";
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public List<Lesson> getLessons() {
+		return lessons;
+	}
+
+	public void setLessons(List<Lesson> lessons) {
+		this.lessons = lessons;
 	}
 
 }

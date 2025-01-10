@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class CourseMapper {
-	
+
 	public CourseDTO toDTO(Course course) {
 
 		if (course == null) {
@@ -20,24 +20,24 @@ public class CourseMapper {
 
 		List<LessonDTO> lessons = course.getLessons()
 				.stream()
-				.map(item -> new LessonDTO(item.getId(), item.getName(), item.getYouTubeUrl()))
+				.map(item -> new LessonDTO(item.getId(), item.getName(), item.getYoutubeUrl()))
 				.collect(Collectors.toList());
 
 		return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(), lessons);
 	}
-	
+
 	public Course toEntity(CourseDTO courseDTO) {
-		
+
 		if (courseDTO == null) {
 			return null;
 		}
-		
+
 		Course course = new Course();
-		
-		if(courseDTO.id() != null) {
+
+		if (courseDTO.id() != null) {
 			course.setId(courseDTO.id());
 		}
-		
+
 		course.setName(courseDTO.name());
 		course.setCategory(converterCategoryValue(courseDTO.category()));
 
@@ -45,7 +45,7 @@ public class CourseMapper {
 			var item = new Lesson();
 			item.setId(lessonDTO.id());
 			item.setName(lessonDTO.name());
-			item.setYouTubeUrl(lessonDTO.youtubeUrl());
+			item.setYoutubeUrl(lessonDTO.youtubeUrl());
 			item.setCourse(course);
 			return item;
 		}).collect(Collectors.toList());
@@ -54,8 +54,19 @@ public class CourseMapper {
 
 		return course;
 	}
-	
+
 	public Category converterCategoryValue(String value) {
+		if (value == null) {
+			return null;
+		}
+		return switch (value) {
+			case "Front-end" -> Category.FRONT_END;
+			case "Back-end" -> Category.BACK_END;
+			default -> throw new IllegalArgumentException("Categoria inválida: " + value);
+		};
+	}
+
+	public Category convertCategoryValue(String value) {
 		if (value == null) {
 			return null;
 		}

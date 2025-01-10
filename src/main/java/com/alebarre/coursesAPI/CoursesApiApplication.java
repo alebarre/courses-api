@@ -17,30 +17,30 @@ public class CoursesApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CoursesApiApplication.class, args);
 	}
-	
+
 	@Bean
 	CommandLineRunner initDataBase(CourseRepository courseRepository) {
 		return argas -> {
 			courseRepository.deleteAll();
-			
+
 			Course c = new Course();
 			c.setName("Angular com Spring");
 			c.setCategory(Category.FRONT_END);
-			
+
 			Lesson lesson = new Lesson();
 			lesson.setName("Introdução");
-			lesson.setYouTubeUrl("ytb1.com");
-			lesson.setCourse(c);			
+			lesson.setYoutubeUrl("ytb1.yf.com");
+			lesson.setCourse(c);
 			c.getLessons().add(lesson);
-			
+
 			Lesson lesson1 = new Lesson();
 			lesson1.setName("Angular");
-			lesson1.setYouTubeUrl("ytb2.com");
-			lesson1.setCourse(c);			
+			lesson1.setYoutubeUrl("ytb2.de.com");
+			lesson1.setCourse(c);
 			c.getLessons().add(lesson1);
-			
+
 			courseRepository.save(c);
-			
+
 		};
 	}
 

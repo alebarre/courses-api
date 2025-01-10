@@ -23,32 +23,24 @@ public class Lesson {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@NotNull
 	@NotBlank
 	@Length(min = 5, max = 100)
 	@Column(length = 100, nullable = false)
 	private String name;
-	
+
 	@NotNull
 	@NotBlank
-	@Length(min = 5, max = 100)
+	@Length(min = 10, max = 11)
 	@Column(length = 11, nullable = false)
-	private String youTubeUrl;
-	
+	private String youtubeUrl;
+
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "course_id", nullable = false)
-	@JsonProperty(access = Access.WRITE_ONLY)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Course course;
-
-	public Course getCourse() {
-		return course;
-	}
-
-	public void setCourse(Course course) {
-		this.course = course;
-	}
 
 	public Long getId() {
 		return id;
@@ -66,17 +58,28 @@ public class Lesson {
 		this.name = name;
 	}
 
-	public String getYouTubeUrl() {
-		return youTubeUrl;
+	public String getYoutubeUrl() {
+		return youtubeUrl;
 	}
 
-	public void setYouTubeUrl(String youTubeUrl) {
-		this.youTubeUrl = youTubeUrl;
+	public void setYoutubeUrl(String youtubeUrl) {
+		this.youtubeUrl = youtubeUrl;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 	@Override
 	public String toString() {
-		return "Lesson [id=" + id + ", name=" + name + ", youTubeUrl=" + youTubeUrl + ", course=" + course + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Lesson [id=").append(id).append(", name=").append(name).append(", youtubeUrl=")
+				.append(youtubeUrl).append(", course=").append(course).append("]");
+		return builder.toString();
 	}
-	
+
 }
