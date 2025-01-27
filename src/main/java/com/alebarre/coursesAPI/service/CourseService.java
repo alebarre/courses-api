@@ -3,19 +3,24 @@ package com.alebarre.coursesAPI.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alebarre.coursesAPI.dto.CourseDTO;
 import com.alebarre.coursesAPI.dto.CourseMapper;
+import com.alebarre.coursesAPI.dto.CoursePageDTO;
 import com.alebarre.coursesAPI.exception.RecordNotFoundException;
 import com.alebarre.coursesAPI.model.Course;
 import com.alebarre.coursesAPI.repository.CourseRepository;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Validated
 @Service
@@ -30,12 +35,19 @@ public class CourseService {
 		this.courseMapper = courseMapper;
 	}
 
-	public @ResponseBody List<CourseDTO> list() {
-		return courseRepository.findAll()
-				.stream()
-				.map(courseMapper::toDTO)
-				.collect(Collectors.toList());
+	// Com paginação
+	public CoursePageDTO list(@PositiveOrZero int page, @Positive @Max(100) int pageSize) {
+		Page<Course> pageCourses = courseRepository.findAll(PageRequest.of(page, pageSize));
+		List<CourseDTO> courses = pageCourses.get().map(courseMapper::toDTO).collect(Collectors.toList());
+		return new CoursePageDTO(courses, pageCourses.getTotalElements(), pageCourses.getTotalPages());
 	}
+	// Sem paginação
+	// public @ResponseBody List<CourseDTO> list() {
+	// return courseRepository.findAll()
+	// .stream()
+	// .map(courseMapper::toDTO)
+	// .collect(Collectors.toList());
+	// }
 
 	public CourseDTO findById(@NotNull @Positive Long id) {
 		return courseRepository.findById(id)

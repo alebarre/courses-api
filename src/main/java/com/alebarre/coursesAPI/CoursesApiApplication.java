@@ -23,25 +23,26 @@ public class CoursesApiApplication {
 		return argas -> {
 			courseRepository.deleteAll();
 
-			Course c = new Course();
-			c.setName("Angular com Spring");
-			c.setCategory(Category.FRONT_END);
+			for (int i = 0; i < 20; i++) {
+				Course c = new Course();
+				c.setName("Curso de Java " + i);
+				c.setCategory(Category.BACK_END);
+				c.setStatus(Status.ACTIVE);
 
-			Lesson lesson = new Lesson();
-			lesson.setName("Introdução");
-			lesson.setYoutubeUrl("ytb1.yf.com");
-			lesson.setCourse(c);
-			c.getLessons().add(lesson);
+				Lesson lesson = new Lesson();
+				lesson.setName("Introdução");
+				lesson.setYoutubeUrl("ytb1.yf.com");
+				lesson.setCourse(c);
+				c.getLessons().add(lesson);
 
-			Lesson lesson1 = new Lesson();
-			lesson1.setName("Angular");
-			lesson1.setYoutubeUrl("ytb2.de.com");
-			lesson1.setCourse(c);
-			c.getLessons().add(lesson1);
+				Lesson lesson1 = new Lesson();
+				lesson1.setName("Java17");
+				lesson1.setYoutubeUrl("ytb2.de.com");
+				lesson1.setCourse(c);
+				c.getLessons().add(lesson1);
 
-			courseRepository.save(c);
-
+				courseRepository.save(c);
+			}
 		};
 	}
-
 }
