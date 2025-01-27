@@ -13,7 +13,7 @@ import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
-	
+
 	@ExceptionHandler(RecordNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String handleNotFoundException(RecordNotFoundException ex) {
@@ -43,8 +43,8 @@ public class ApplicationControllerAdvice {
 			String type = ex.getRequiredType().getName();
 			String[] parts = type.split("\\.");
 			String typeName = parts[parts.length - 1];
-			return ex.getName() + " should be of type " + typeName;
+			return "o campo '" + ex.getName() + "'  Dever ser do tipo " + typeName + " ❗";
 		}
-		return "Invalid type";
+		return "Tipo inválido";
 	}
 }
