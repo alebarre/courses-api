@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import com.alebarre.coursesAPI.enums.Category;
 import com.alebarre.coursesAPI.enums.Status;
@@ -19,6 +20,7 @@ public class CoursesApiApplication {
 	}
 
 	@Bean
+	@Profile("dev")
 	CommandLineRunner initDataBase(CourseRepository courseRepository) {
 		return argas -> {
 			courseRepository.deleteAll();

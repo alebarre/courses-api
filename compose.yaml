@@ -1,0 +1,11 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    container_name: 'courses-db-container'
+    environment:
+      - 'MYSQL_DATABASE=coursesAPI'
+      - 'MYSQL_PASSWORD=123X@deejay'
+      - 'MYSQL_ROOT_PASSWORD=123X@deejay'
+      - 'MYSQL_USER=alebarre'
+    ports:
+      - '3306:3306'
