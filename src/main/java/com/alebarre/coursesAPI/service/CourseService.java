@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alebarre.coursesAPI.dto.CourseDTO;
 import com.alebarre.coursesAPI.dto.CourseMapper;
@@ -64,7 +63,7 @@ public class CourseService {
 				.map(recordFound -> {
 					Course course = courseMapper.toEntity(courseDTO);
 					recordFound.setName(courseDTO.name());
-					recordFound.setCategory(courseMapper.convertCategoryValue(courseDTO.category()));
+					recordFound.setCategory(courseMapper.converterCategoryValue(courseDTO.category()));
 					recordFound.getLessons().clear();
 					course.getLessons().forEach(recordFound.getLessons()::add);
 					return courseMapper.toDTO(courseRepository.save(recordFound));

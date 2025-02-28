@@ -22,7 +22,7 @@ public class CoursesApiApplication {
 	@Bean
 	@Profile("dev")
 	CommandLineRunner initDataBase(CourseRepository courseRepository) {
-		return argas -> {
+		return args -> {
 			courseRepository.deleteAll();
 
 			for (int i = 0; i < 20; i++) {

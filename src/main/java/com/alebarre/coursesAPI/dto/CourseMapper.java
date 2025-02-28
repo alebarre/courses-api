@@ -65,16 +65,4 @@ public class CourseMapper {
 			default -> throw new IllegalArgumentException("Categoria inválida: " + value);
 		};
 	}
-
-	public Category convertCategoryValue(String value) {
-		if (value == null) {
-			return null;
-		}
-		return switch (value) {
-			case "Front-end" -> Category.FRONT_END;
-			case "Back-end" -> Category.BACK_END;
-			default -> throw new IllegalArgumentException("Categoria inválida: " + value);
-		};
-	}
-
 }
